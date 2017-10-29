@@ -1,0 +1,5 @@
+vwesteros
+*.pyc
+staticfiles
+.env
+

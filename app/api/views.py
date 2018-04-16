@@ -54,3 +54,36 @@ class LoginService(APIView):
             content = {'error':error.serializer()}
             return Response(data=content, status=status.HTTP_400_BAD_REQUEST)
 
+
+class Error:
+    def __init__(self, status, title, detail):
+        self.status = status
+        self.title  = title
+        self.detail = detail
+
+    def serializer(self):
+        return {'status': self.status, 'title':self.title, 'detail':self.detail}
+
+
+class RegisterService(APIView):
+    def post(self, request, format=None):
+
+        username   = request.data['username']
+        password   = request.data['password']
+
+        try:
+            user = User.objects.get(username=username)
+
+        except User.DoesNotExist:
+            #error = Error(4004, "Error", "El Usuario o Contraseña ingresados son incorrectos.")
+            #content = {'error':error.serializer()}
+            serialized = RegisterUserSerializer(data=request.data)
+            if serialized.is_valid():
+                serialized.save()
+                
+            return Response(serialized.data, status=status.HTTP_201_CREATED)
+        else:
+            error = Error(4000, "Error", "El Usuario ya existe.")
+            content = {'error':error.serializer()}
+            return Response(data=content, status=status.HTTP_400_BAD_REQUEST)
+

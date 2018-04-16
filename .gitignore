@@ -1,5 +1,6 @@
 vwesteros
 *.pyc
 staticfiles
+.DS_Store
 .env
 

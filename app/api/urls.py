@@ -9,6 +9,6 @@ from django.conf.urls import url
 urlpatterns = [
 
 	url(r'^login/$', views.LoginService.as_view()),
-
+	url(r'^register/$', views.RegisterService.as_view()),
 	#url(r'^commerce/$', views.CommerceList.as_view()),
 ]
